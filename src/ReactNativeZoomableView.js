@@ -129,9 +129,12 @@ class ReactNativeZoomableView extends Component {
   _handleMoveShouldSetPanResponder = (e, gestureState) => {
     let baseComponentResult =
             this.props.zoomEnabled &&
-            (Math.abs(gestureState.dx) > 2 ||
-                Math.abs(gestureState.dy) > 2 ||
-                gestureState.numberActiveTouches === 2);
+            ((Math.abs(gestureState.dx) > 2||
+               Math.abs(gestureState.dy) > 2) &&
+               (gestureState.numberActiveTouches === 2
+                 ||
+                 this.state.zoomLevel !== this.props.initialZoom
+                 ));
 
     if (this.props.onMoveShouldSetPanResponder) {
       baseComponentResult = this.props.onMoveShouldSetPanResponder(
